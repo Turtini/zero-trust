@@ -1,12 +1,23 @@
+# .github/workflows/build-exports.yml
 name: Build PDF Exports
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
+    paths:
+      - "**/*.md"
+      - "scripts/**"
+      - "styles/**"
+      - "diagrams/**"
+      - ".github/workflows/build-exports.yml"
+  workflow_dispatch: {}
 
 permissions:
   contents: write
+
+concurrency:
+  group: build-exports-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-exports:
@@ -18,10 +29,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Pandoc + PDF engine (XeLaTeX)
+      - name: Install Pandoc + TeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex
+          sudo apt-get install -y \
+            pandoc \
+            texlive-xetex \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            fonts-liberation
 
       - name: Build PDF exports
         run: |
@@ -33,13 +49,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add generated PDFs
-          git add exports/*.pdf || true
-
-          # Commit only if there are changes
-          git commit -m "Update PDF exports" || echo "No changes to commit"
-
-      - name: Push changes
-        run: |
-          git push
+          # Only commit if exports changed
+          if [[ -n "$(git status --porcelain exports/)" ]]; then
+            git add exports/
+            git commit -m "Update PDF exports"
+            git pull --rebase
+            git push
+          else
+            echo "No changes in exports/ to commit."
+          fi
 

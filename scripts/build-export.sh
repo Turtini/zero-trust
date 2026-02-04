@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Run from repo root even if executed elsewhere
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "${REPO_ROOT}"
+
 # Where we put exports
 EXPORT_DIR="exports"
 mkdir -p "${EXPORT_DIR}"
@@ -24,10 +28,13 @@ cat > "${TMP_MD}" <<'EOF'
 EOF
 
 # Optional: include the diagram near the top
-cat >> "${TMP_MD}" <<'EOF'
+# With xelatex, local images embed correctly.
+if [[ -f "diagrams/ztmm-mapping.png" ]]; then
+  cat >> "${TMP_MD}" <<'EOF'
 ![](diagrams/ztmm-mapping.png){ width=90% }
 
 EOF
+fi
 
 # Append files in a deliberate order
 FILES=(
@@ -37,28 +44,27 @@ FILES=(
   "notes/implementation-considerations.md"
   "notes/common-antipatterns.md"
   "notes/day-2-operating-model.md"
-  "notes/ownership-models.md"
   "notes/organizational-alignment.md"
+  "notes/ownership-models.md"
 )
 
 for f in "${FILES[@]}"; do
-  if [[ ! -f "${f}" ]]; then
-    echo "ERROR: Missing file: ${f}"
-    exit 1
+  if [[ -f "${f}" ]]; then
+    echo -e "\n\n---\n" >> "${TMP_MD}"
+    echo -e "\n\n<!-- SOURCE: ${f} -->\n\n" >> "${TMP_MD}"
+    cat "${f}" >> "${TMP_MD}"
+  else
+    echo "WARN: missing file '${f}' (skipping)" >&2
   fi
 done
 
-for f in "${FILES[@]}"; do
-  echo -e "\n\n---\n" >> "${TMP_MD}"
-  echo -e "\n\n<!-- SOURCE: ${f} -->\n\n" >> "${TMP_MD}"
-  cat "${f}" >> "${TMP_MD}"
-done
-
-# Create PDF via pandoc using XeLaTeX (reliable in GitHub Actions with texlive-xetex)
+# Create PDF via pandoc + xelatex (stable in GitHub Actions)
 pandoc "${TMP_MD}" \
   --from=gfm \
   --pdf-engine=xelatex \
+  --include-in-header="styles/pdf-style.tex" \
   --metadata title="Zero Trust Architecture: Operational Reference" \
+  --toc \
   -o "${OUT_SNAPSHOT}"
 
 # Also write/update "latest"
