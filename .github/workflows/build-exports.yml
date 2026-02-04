@@ -2,9 +2,11 @@ name: Build PDF Exports
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-exports:
@@ -13,11 +15,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install Pandoc
+      - name: Install Pandoc + PDF engine (XeLaTeX)
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra
+          sudo apt-get install -y pandoc texlive-xetex
 
       - name: Build PDF exports
         run: |
@@ -26,14 +30,16 @@ jobs:
 
       - name: Commit exports
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          if [ -n "$(git status --porcelain exports/)" ]; then
-            git add exports/
-            git commit -m "Automated PDF export update"
-            git push
-          else
-            echo "No export changes to commit"
-          fi
+          # Add generated PDFs
+          git add exports/*.pdf || true
+
+          # Commit only if there are changes
+          git commit -m "Update PDF exports" || echo "No changes to commit"
+
+      - name: Push changes
+        run: |
+          git push
 
