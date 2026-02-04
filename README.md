@@ -1,112 +1,126 @@
-# Zero Trust in Practice  
-## Mapping Red Hat OpenShift and Ansible to CISA’s Zero Trust Maturity Model
+# Zero Trust Architecture Reference Library
 
-Federal agencies are no longer debating *whether* to adopt Zero Trust.  
-The challenge now is how to move from **Initial** or **Advanced** maturity to **Optimal** under the CISA Zero Trust Maturity Model (ZTMM).
+This repository is a living reference for designing, operating, and sustaining **Zero Trust Architectures (ZTA)** in regulated federal environments.
 
-This repository documents how that transition can be achieved using **enterprise open source platforms** — specifically **Red Hat OpenShift** and **Ansible Automation Platform** — in regulated federal environments.
+It focuses on **how Zero Trust actually works in practice** once software is deployed — including architecture, automation, ownership, and Day-2 operations — rather than abstract frameworks or product descriptions.
 
-The materials here are written for architects, operators, and security practitioners responsible for designing, operating, and governing production systems.
+The materials here are written for senior architects, platform engineers, security leaders, and program owners responsible for long-term outcomes.
+
+---
+
+## Why This Repository Exists
+
+Many Zero Trust efforts stall not because of missing tools, but because of:
+- unclear ownership
+- fragmented authority
+- manual enforcement
+- contractor-dependent operations
+- undocumented institutional knowledge
+
+This repository exists to capture **operational patterns that survive audits, personnel changes, and budget cycles**.
+
+It is intentionally practical, opinionated, and grounded in real federal constraints.
 
 ---
 
 ## What This Repository Is
 
-This is a **technical reference**, not a marketing site.
+- A **reference library**, not a campaign
+- A **working vocabulary** for architecture and governance discussions
+- A **bridge** between policy intent and operational reality
+- A **tool for internal alignment**, documentation, and continuity
 
-It provides:
-- Plain-language mappings between CISA Zero Trust pillars and real platform capabilities
-- Practical implementation guidance grounded in federal operational constraints
-- Architecture patterns that emphasize automation, identity, and continuous verification
-- Examples informed by real federal use cases
-
-All content is intentionally readable, inspectable, and versioned.
+The content here is meant to be:
+- read
+- discussed
+- adapted
+- cited internally
 
 ---
 
 ## What This Repository Is Not
 
-- Not a product pitch  
+- Not a product catalog  
 - Not a compliance checklist  
 - Not a theoretical whitepaper  
+- Not vendor marketing  
 
-This repository focuses on **how systems are actually built and operated** once software is installed.
-
----
-
-## Zero Trust Pillars Covered
-
-This repository addresses the five pillars of the CISA Zero Trust Maturity Model:
-
-1. **Identity**  
-   Identity-centric access using PIV/CAC integration, centralized identity management, and policy-driven authorization.
-
-2. **Devices**  
-   Continuous compliance through automated configuration enforcement and hardened golden images.
-
-3. **Networks**  
-   Micro-segmentation and encrypted service-to-service communication using platform-native service mesh capabilities.
-
-4. **Applications & Workloads**  
-   Treating OpenShift as a first-class enterprise platform rather than an application-specific dependency.
-
-5. **Data**  
-   Automated encryption, access logging, and integration with agency security monitoring systems.
-
-Each section emphasizes automation, auditability, and operational sustainability.
+This material is focused on **operating systems and organizations at scale**.
 
 ---
 
-## Operational Philosophy
+## Contents
 
-Reaching **Optimal** Zero Trust maturity is not a tooling problem alone.
+### Architecture & Framework Mapping
+- **CISA Zero Trust Pillar Mappings**  
+  Practical mappings between the CISA Zero Trust Maturity Model and real platform capabilities.
 
-It requires:
-- Automation over manual processes
-- Platform consistency over bespoke deployments
-- Workforce enablement over contractor dependency
-- Transparency over abstraction
+### Operating Models
+- **Day-2 Operating Model**  
+  How Zero Trust is sustained after deployment through automation, validation, and ownership.
+- **Ownership Models**  
+  Clear ownership patterns that reduce risk, lower contractor dependency, and improve audit outcomes.
+- **Organizational Alignment**  
+  How authority, incentives, and responsibility must align for Zero Trust to succeed.
 
-The patterns documented here are designed to support **Day-2 operations** — not just initial deployment.
+### Implementation Guidance
+- **Implementation Considerations**  
+  Real-world constraints, tradeoffs, and lessons learned.
+- **Common Anti-Patterns**  
+  Repeated failure modes observed across Zero Trust initiatives.
+
+### Visual References
+- **ZTMM Mapping Diagram**  
+  Visual representation of Zero Trust pillars and operational responsibilities.
 
 ---
 
-## Relationship to Turtini
+## How to Use This Library
 
-This repository is maintained by **Turtini LLC**, a small U.S.-based mission partner focused on successful technology implementations in regulated environments.
+This repository is commonly used to:
+- Frame architecture reviews
+- Support Zero Trust planning discussions
+- Document current-state and target-state operations
+- Reduce reliance on oral history and contractor knowledge
+- Prepare for audits without creating parallel documentation
 
-Turtini publishes open, public technical artifacts to:
-- Support informed evaluation
-- Enable peer review
-- Reduce implementation risk
-- Strengthen federal operator self-sufficiency
+Content is modular and intended to be reused internally.
+
+---
+
+## Stewardship and Philosophy
+
+Zero Trust is not a project.  
+It is an **operating posture**.
+
+Sustainable Zero Trust requires:
+- automation as enforcement
+- identity as the control plane
+- platforms as shared infrastructure
+- ownership that survives personnel changes
+
+This repository reflects that philosophy.
+
+---
+
+## About Turtini
+
+This library is maintained by **Turtini LLC**, a small U.S.-based mission partner focused on successful technology implementations in regulated environments.
+
+Turtini publishes open, versioned technical artifacts to support:
+- informed evaluation
+- peer review
+- operational clarity
+- long-term institutional resilience
 
 More information:
-- Website: https://turtini.com  
-- Technical index: https://turtini.github.io  
-
----
-
-## How to Use This Repository
-
-- Engineers: review architecture patterns and implementation guidance  
-- Security teams: map controls to operational mechanisms  
-- Leadership: understand what “Optimal” maturity requires beyond procurement  
-
-Content is designed to be shared internally and referenced in planning discussions.
+- https://turtini.com/approach
+- https://turtini.github.io
 
 ---
 
 ## License
 
-This repository is published under the MIT License.  
-All materials are provided as reference implementations and should be reviewed and adapted to each environment.
+Published under the MIT License.
 
----
-
-## Status
-
-This repository is actively maintained and will evolve as:
-- CISA guidance matures
-- Platform capabilities change
-- Federal operating models continue to shift
+All materials are provided as reference and should be reviewed and adapted to each environment.
