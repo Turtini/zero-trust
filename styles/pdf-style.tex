@@ -1,80 +1,70 @@
 % styles/pdf-style.tex
-% Shared PDF styling (cheat-sheet-ish): clean, readable, enterprise.
+% CI-safe, XeLaTeX-compatible, cheat-sheet style
 
-\usepackage[margin=1in]{geometry}
-
-% Fonts (use Arial if available; otherwise Liberation Sans)
 \usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{framed}
+
+% ---------- Page layout ----------
+\geometry{
+  margin=1in
+}
+
+\setstretch{1.15}
+
+% ---------- Fonts ----------
+% Prefer Arial if available, otherwise fall back safely
 \IfFontExistsTF{Arial}{
   \setmainfont{Arial}
-  \setsansfont{Arial}
 }{
-  \setmainfont{Liberation Sans}
-  \setsansfont{Liberation Sans}
-}
-\setmonofont{DejaVu Sans Mono}
-
-% Better typography
-\usepackage{microtype}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt}
-
-% Colors + links (subtle, enterprise)
-\usepackage{xcolor}
-\definecolor{TurtiniLink}{HTML}{0B5CAD} % calm blue
-\definecolor{TurtiniRule}{HTML}{D7DCE3}
-\definecolor{CodeBg}{HTML}{F6F8FA}
-
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=TurtiniLink,
-  urlcolor=TurtiniLink,
-  citecolor=TurtiniLink
+  \setmainfont{TeX Gyre Heros}
 }
 
-% Headings
-\usepackage{titlesec}
-\titleformat{\section}{\Large\bfseries}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.6em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
-\titlespacing*{\section}{0pt}{14pt}{6pt}
-\titlespacing*{\subsection}{0pt}{10pt}{5pt}
-\titlespacing*{\subsubsection}{0pt}{8pt}{4pt}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{Inconsolata}
 
-% Page header/footer
-\usepackage{fancyhdr}
+% ---------- Colors ----------
+\definecolor{TurtiniBlue}{HTML}{0B3C5D}
+\definecolor{LightGray}{HTML}{F5F7FA}
+\definecolor{CodeGray}{HTML}{F0F0F0}
+
+% ---------- Headings (Pandoc-native) ----------
+\setcounter{secnumdepth}{2}
+
+% ---------- Header / footer ----------
 \pagestyle{fancy}
 \fancyhf{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-\definecolor{HeaderRule}{HTML}{D7DCE3}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{HeaderRule}\leaders\hrule height \headrulewidth\hfill}}
-
-\fancyhead[L]{\small\textbf{Zero Trust Architecture: Operational Reference}}
+\fancyhead[L]{\small Zero Trust Architecture — Operational Reference}
 \fancyhead[R]{\small Turtini LLC}
-\fancyfoot[C]{\small\thepage}
+\fancyfoot[C]{\thepage}
 
-% Code blocks (Pandoc uses Shaded/Highlighting)
-\usepackage{fancyvrb}
-\usepackage{framed}
-\usepackage{fvextra}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small}
+% ---------- Links ----------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=TurtiniBlue,
+  urlcolor=TurtiniBlue,
+  citecolor=TurtiniBlue
+}
 
-\renewenvironment{Shaded}{%
-  \def\FrameCommand{\fboxrule=0pt\fboxsep=10pt\colorbox{CodeBg}}%
-  \MakeFramed{\advance\hsize-2\width \FrameRestore}%
-}{\endMakeFramed}
+% ---------- Code blocks ----------
+\definecolor{shadecolor}{RGB}{245,247,250}
+\renewenvironment{Shaded}{
+  \begin{snugshade}
+}{
+  \end{snugshade}
+}
 
-% Tables (nicer defaults)
-\usepackage{longtable,booktabs,array}
+\setlength{\FrameSep}{6pt}
+
+% ---------- Tables ----------
 \renewcommand{\arraystretch}{1.2}
-
-% Images (scale down nicely)
-\usepackage{graphicx}
-\setkeys{Gin}{width=\linewidth,keepaspectratio}
-
-% Slightly tighter list spacing
-\usepackage{enumitem}
-\setlist{topsep=4pt,itemsep=2pt,parsep=0pt,partopsep=0pt}
 
