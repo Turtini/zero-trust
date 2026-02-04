@@ -1,0 +1,39 @@
+name: Build PDF Exports
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-exports:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra
+
+      - name: Build PDF exports
+        run: |
+          chmod +x scripts/build-export.sh
+          ./scripts/build-export.sh
+
+      - name: Commit exports
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          if [ -n "$(git status --porcelain exports/)" ]; then
+            git add exports/
+            git commit -m "Automated PDF export update"
+            git push
+          else
+            echo "No export changes to commit"
+          fi
+
