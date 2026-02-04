@@ -24,7 +24,6 @@ cat > "${TMP_MD}" <<'EOF'
 EOF
 
 # Optional: include the diagram near the top
-# Pandoc will embed local images when generating PDF through an HTML engine.
 cat >> "${TMP_MD}" <<'EOF'
 ![](diagrams/ztmm-mapping.png){ width=90% }
 
@@ -43,15 +42,22 @@ FILES=(
 )
 
 for f in "${FILES[@]}"; do
+  if [[ ! -f "${f}" ]]; then
+    echo "ERROR: Missing file: ${f}"
+    exit 1
+  fi
+done
+
+for f in "${FILES[@]}"; do
   echo -e "\n\n---\n" >> "${TMP_MD}"
   echo -e "\n\n<!-- SOURCE: ${f} -->\n\n" >> "${TMP_MD}"
   cat "${f}" >> "${TMP_MD}"
 done
 
-# Create PDF via pandoc using wkhtmltopdf (avoids LaTeX toolchain)
+# Create PDF via pandoc using XeLaTeX (reliable in GitHub Actions with texlive-xetex)
 pandoc "${TMP_MD}" \
   --from=gfm \
-  --pdf-engine=wkhtmltopdf \
+  --pdf-engine=xelatex \
   --metadata title="Zero Trust Architecture: Operational Reference" \
   -o "${OUT_SNAPSHOT}"
 
@@ -61,3 +67,4 @@ cp -f "${OUT_SNAPSHOT}" "${OUT_LATEST}"
 echo "Wrote:"
 echo "  ${OUT_SNAPSHOT}"
 echo "  ${OUT_LATEST}"
+
