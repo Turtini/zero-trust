@@ -38,8 +38,9 @@ jobs:
             texlive-latex-extra \
             texlive-fonts-recommended \
             texlive-fonts-extra \
-            fonts-arimo \
+            fonts-croscore \
             fonts-liberation
+          fc-list | grep -i arimo | head -n 5 || true
 
       - name: Build PDF exports
         run: |
