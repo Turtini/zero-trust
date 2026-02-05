@@ -1,70 +1,56 @@
 % styles/pdf-style.tex
-% CI-safe, XeLaTeX-compatible, cheat-sheet style
+% Portable PDF styling for pandoc + xelatex (GitHub Actions friendly)
 
 \usepackage{fontspec}
 \usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{setspace}
-\usepackage{fancyhdr}
+\usepackage{microtype}
 \usepackage{hyperref}
+\usepackage{fvextra}
+\usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{longtable}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{enumitem}
-\usepackage{framed}
 
-% ---------- Page layout ----------
-\geometry{
-  margin=1in
-}
+% Page geometry similar to "clean enterprise PDFs"
+\geometry{margin=1in}
 
-\setstretch{1.15}
+% Fonts (portable on ubuntu runners)
+\setmainfont{Liberation Sans}
+\setsansfont{Liberation Sans}
+\setmonofont{Liberation Mono}
 
-% ---------- Fonts ----------
-% Prefer Arial if available, otherwise fall back safely
-\IfFontExistsTF{Arial}{
-  \setmainfont{Arial}
-}{
-  \setmainfont{TeX Gyre Heros}
-}
+% Slightly tighter/cleaner defaults
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\linespread{1.06}
 
-\setsansfont{TeX Gyre Heros}
-\setmonofont{Inconsolata}
-
-% ---------- Colors ----------
-\definecolor{TurtiniBlue}{HTML}{0B3C5D}
-\definecolor{LightGray}{HTML}{F5F7FA}
-\definecolor{CodeGray}{HTML}{F0F0F0}
-
-% ---------- Headings (Pandoc-native) ----------
-\setcounter{secnumdepth}{2}
-
-% ---------- Header / footer ----------
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small Zero Trust Architecture — Operational Reference}
-\fancyhead[R]{\small Turtini LLC}
-\fancyfoot[C]{\thepage}
-
-% ---------- Links ----------
+% Links (subtle)
 \hypersetup{
   colorlinks=true,
-  linkcolor=TurtiniBlue,
-  urlcolor=TurtiniBlue,
-  citecolor=TurtiniBlue
+  linkcolor=black,
+  urlcolor=black,
+  citecolor=black
 }
 
-% ---------- Code blocks ----------
-\definecolor{shadecolor}{RGB}{245,247,250}
-\renewenvironment{Shaded}{
-  \begin{snugshade}
-}{
-  \end{snugshade}
+% Code blocks (pandoc uses Verbatim)
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaksymbolleft={},
+  breaklines=true,
+  fontsize=\small
 }
 
-\setlength{\FrameSep}{6pt}
+% Simple header/footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\footnotesize Zero Trust Architecture: Operational Reference}
+\rhead{\footnotesize Turtini LLC}
+\cfoot{\footnotesize \thepage}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0pt}
 
-% ---------- Tables ----------
-\renewcommand{\arraystretch}{1.2}
+% Pandoc sometimes uses Shaded (depending on highlighting)
+% Define it safely without extra packages
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{245,245,245}
+\renewenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 
