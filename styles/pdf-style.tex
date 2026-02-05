@@ -1,42 +1,51 @@
 % styles/pdf-style.tex
-% Portable PDF style for Pandoc + XeLaTeX on GitHub Actions
+% Turtini PDF style (portable) — header/footer branding + sane defaults
 
-\usepackage{fontspec}
-\setmainfont{Liberation Sans}
-\setsansfont{Liberation Sans}
-\setmonofont{Liberation Mono}[Scale=MatchLowercase]
-
+% --- Core packages ---
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
 \usepackage{geometry}
+\usepackage{sectsty}
+
+% --- Page layout ---
 \geometry{margin=1in}
 
-\usepackage{xcolor}
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue
-}
+% --- Section styling ---
+\sectionfont{\bfseries}
 
-\usepackage{fancyhdr}
+% --- Fancy header/footer everywhere ---
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Zero Trust Architecture: Operational Reference}
-\rhead{Turtini LLC}
-\cfoot{\thepage}
 
-% ---- Pandoc codeblock shading support ----
-% Pandoc may or may not define Shaded depending on template/highlighting.
-% If your style file tries to \renewenvironment{Shaded} before it exists,
-% LaTeX will error: "Environment Shaded undefined."
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{245,245,245}
+% Pandoc/XeLaTeX can be picky: must be tall enough for the header content
+\setlength{\headheight}{18pt}
 
-\makeatletter
-\@ifundefined{Shaded}{%
-  \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}%
-}{%
-  \renewenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}%
+% Header (left: logo, center: doc label, right: page #)
+\fancyhead[L]{%
+  \includegraphics[height=14pt]{assets/logo.png}%
 }
-\makeatother
+\fancyhead[C]{%
+  \small\textcolor{gray}{Zero Trust Architecture — Operational Reference}%
+}
+\fancyhead[R]{%
+  \small\textcolor{gray}{Page \thepage}%
+}
+
+% Footer (left: repo, right: date)
+\fancyfoot[L]{%
+  \small\textcolor{gray}{github.com/Turtini/zero-trust}%
+}
+\fancyfoot[R]{%
+  \small\textcolor{gray}{\today}%
+}
+
+% Rules
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Force Pandoc title page ("plain" style) to use fancy
+\fancypagestyle{plain}{%
+  \pagestyle{fancy}%
+}
 
