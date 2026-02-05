@@ -1,36 +1,35 @@
-% ============================
+% ================================
 % Turtini PDF Style (Portable)
-% ============================
+% Matches CLI Cheat Sheets
+% ================================
 
-% --- Core packages ---
+% --- Core packages (portable) ---
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{geometry}
-\usepackage{sectsty}
 \usepackage{setspace}
 
 % --- Page geometry ---
 \geometry{margin=1in}
 
-% --- Fonts (portable on Ubuntu GitHub runners) ---
-\usepackage{fontspec}
-\setmainfont{Liberation Serif}
-\setsansfont{Liberation Sans}
-\setmonofont{Liberation Mono}
+% --- Fonts (set by Pandoc, but safe defaults) ---
+% Pandoc CLI sets:
+% -V mainfont=Arimo
+% -V monofont=Arimo
 
-% --- Section styling ---
-\sectionfont{\bfseries}
-\subsectionfont{\bfseries}
-\subsubsectionfont{\bfseries}
+\renewcommand{\familydefault}{\sfdefault}
 
-% --- Header / Footer ---
+% --- Line spacing ---
+\setstretch{1.1}
+
+% --- Fancy header/footer everywhere ---
 \pagestyle{fancy}
 \fancyhf{}
 
 \setlength{\headheight}{18pt}
 
-% Header
+% --- Header ---
 \fancyhead[L]{%
   \includegraphics[height=14pt]{assets/logo.png}%
 }
@@ -41,7 +40,7 @@
   \small\textcolor{gray}{Page \thepage}%
 }
 
-% Footer
+% --- Footer ---
 \fancyfoot[L]{%
   \small\textcolor{gray}{github.com/Turtini/zero-trust}%
 }
@@ -49,18 +48,32 @@
   \small\textcolor{gray}{\today}%
 }
 
+% --- Rules ---
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0pt}
 
-% --- Ensure Pandoc title page uses fancy header ---
+% --- Force Pandoc title page to use fancy ---
 \fancypagestyle{plain}{
   \pagestyle{fancy}
 }
 
-% --- Paragraph spacing (clean, report-like) ---
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt}
+% --- Code blocks (Pandoc-safe, no Shaded env) ---
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  fontsize=\small,
+  breaklines=true,
+  commandchars=\\\{\}
+}
 
-% --- Line spacing ---
-\onehalfspacing
+% --- Tables ---
+\usepackage{longtable}
+\usepackage{booktabs}
+
+% --- Lists (portable defaults) ---
+\usepackage{enumitem}
+\setlist{nosep}
+
+% ================================
+% End Turtini PDF Style
+% ================================
 

@@ -44,7 +44,11 @@ done
 pandoc "${TMP_MD}" \
   --from=gfm \
   --pdf-engine=xelatex \
+  --resource-path=.:assets \
   --include-in-header=styles/pdf-style.tex \
+  -V mainfont="Arimo" \
+  -V monofont="Arimo" \
+  -V fontsize=11pt \
   --metadata title="Zero Trust Architecture: Operational Reference" \
   -o "${OUT_SNAPSHOT}"
 
