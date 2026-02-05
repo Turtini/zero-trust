@@ -19,7 +19,7 @@ cat > "${TMP_MD}" <<'EOF'
 EOF
 
 cat >> "${TMP_MD}" <<'EOF'
-![](diagrams/ZTMM-mapping.png){ width=90% }
+![](diagrams/ZTMM-Mapping.png){ width=90% }
 
 EOF
 
