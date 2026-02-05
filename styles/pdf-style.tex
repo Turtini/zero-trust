@@ -1,5 +1,6 @@
-% styles/pdf-style.tex
-% Turtini PDF style (portable) — header/footer branding + sane defaults
+% ============================
+% Turtini PDF Style (Portable)
+% ============================
 
 % --- Core packages ---
 \usepackage{graphicx}
@@ -7,21 +8,29 @@
 \usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{sectsty}
+\usepackage{setspace}
 
-% --- Page layout ---
+% --- Page geometry ---
 \geometry{margin=1in}
+
+% --- Fonts (portable on Ubuntu GitHub runners) ---
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont{Liberation Mono}
 
 % --- Section styling ---
 \sectionfont{\bfseries}
+\subsectionfont{\bfseries}
+\subsubsectionfont{\bfseries}
 
-% --- Fancy header/footer everywhere ---
+% --- Header / Footer ---
 \pagestyle{fancy}
 \fancyhf{}
 
-% Pandoc/XeLaTeX can be picky: must be tall enough for the header content
 \setlength{\headheight}{18pt}
 
-% Header (left: logo, center: doc label, right: page #)
+% Header
 \fancyhead[L]{%
   \includegraphics[height=14pt]{assets/logo.png}%
 }
@@ -32,7 +41,7 @@
   \small\textcolor{gray}{Page \thepage}%
 }
 
-% Footer (left: repo, right: date)
+% Footer
 \fancyfoot[L]{%
   \small\textcolor{gray}{github.com/Turtini/zero-trust}%
 }
@@ -40,12 +49,18 @@
   \small\textcolor{gray}{\today}%
 }
 
-% Rules
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0pt}
 
-% Force Pandoc title page ("plain" style) to use fancy
-\fancypagestyle{plain}{%
-  \pagestyle{fancy}%
+% --- Ensure Pandoc title page uses fancy header ---
+\fancypagestyle{plain}{
+  \pagestyle{fancy}
 }
+
+% --- Paragraph spacing (clean, report-like) ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% --- Line spacing ---
+\onehalfspacing
 
