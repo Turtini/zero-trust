@@ -1,6 +1,8 @@
-# Zero Trust
+# Zero Trust Architecture Reference Library
 
-Clear, audit-safe guidance on how security and compliance are evaluated in U.S. public sector environments.
+Clear, practical guidance on Zero Trust architecture in U.S. public sector environments.
+
+This reference library explains how Zero Trust principles are applied in real federal systems — including identity, network segmentation, platform boundaries, and shared responsibility across infrastructure and services.
 
 ```{toctree}
 :maxdepth: 2
