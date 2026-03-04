@@ -8,7 +8,7 @@ from turtini_sphinx_theme import get_theme_paths
 
 
 # ---- Project metadata ----
-project = "Public Sector Security"
+project = "Zero Trust"
 author = "Turtini LLC"
 copyright = f"{datetime.utcnow().year}, Turtini LLC"
 
